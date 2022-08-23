@@ -1,7 +1,9 @@
 package br.com.mybank.controllers;
 
 import br.com.mybank.dtos.ClienteDto;
+import br.com.mybank.dtos.ContaDto;
 import br.com.mybank.models.Cliente;
+import br.com.mybank.models.Conta;
 import br.com.mybank.services.ClienteService;
 import br.com.mybank.services.ContaService;
 import org.springframework.http.HttpStatus;
@@ -44,5 +46,17 @@ public class ContaController {
     @PutMapping("clientes/{id}")
     public ResponseEntity<Object> updateClient(@PathVariable(value = "id") Long id, @RequestBody Cliente cliente){
         return clienteService.updateClientById(id, cliente);
+    }
+    @PostMapping
+    public ResponseEntity<Object> createBankAccount(@RequestBody @Valid ContaDto contaDto){
+        return contaService.createBankAccount(contaDto);
+    }
+    @PutMapping("{id}")
+    public ResponseEntity<Object> updateBankAcoount(@PathVariable(value = "id") Long id, @RequestBody Conta conta){
+        return contaService.updateBankAccountById(id, conta);
+    }
+    @DeleteMapping("{id}")
+    public ResponseEntity<Object> deleteBankAcoount(@PathVariable(value = "id") Long id){
+        return contaService.deleteBankAccountById(id);
     }
 }

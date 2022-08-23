@@ -3,14 +3,17 @@ package br.com.mybank.dtos;
 import javax.persistence.Column;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Date;
 
 public class ClienteDto {
-    @NotNull
+    @NotBlank
     private String name;
-    @NotNull
+    @NotBlank
+    @Size(min = 14, max = 14)
     private String ssn;
-    @NotNull
+    @NotBlank
+    @Size(min = 10, max = 10)
     private String birthDate;
 
     public String getName() {

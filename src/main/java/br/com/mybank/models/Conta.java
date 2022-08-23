@@ -1,8 +1,9 @@
 package br.com.mybank.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.rmi.server.UID;
 
 @Entity
 @Table(name = "contas")
@@ -12,23 +13,27 @@ public class Conta {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @Column(nullable = false, length = 4)
-    private Integer agencia;
+    private String agencia;
     @Column(nullable = false)
     private String numero;
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "cliente_id", nullable = false)
     private Cliente clienteId;
     @Column(nullable = false)
     private BigDecimal saldo = BigDecimal.valueOf(0);
     @Column
-    private BigDecimal limite;
+    private boolean limite;
+    @Column
+    private String tipo;
 
-    public Conta(Integer agencia, String numero, Cliente clienteId, BigDecimal saldo, BigDecimal limite) {
+    public Conta(String agencia, String numero, Cliente clienteId, BigDecimal saldo, boolean limite, String tipo) {
         this.agencia = agencia;
         this.numero = numero;
         this.clienteId = clienteId;
         this.saldo = saldo;
         this.limite = limite;
+        this.tipo = tipo;
     }
 
     public Conta() {
@@ -38,11 +43,11 @@ public class Conta {
         return id;
     }
 
-    public Integer getAgencia() {
+    public String getAgencia() {
         return agencia;
     }
 
-    public void setAgencia(Integer agencia) {
+    public void setAgencia(String agencia) {
         this.agencia = agencia;
     }
 
@@ -70,11 +75,23 @@ public class Conta {
         this.saldo = saldo;
     }
 
-    public BigDecimal getLimite() {
+    public boolean getLimite() {
         return limite;
     }
 
-    public void setLimite(BigDecimal limite) {
+    public void setLimite(boolean limite) {
         this.limite = limite;
+    }
+
+    public boolean isLimite() {
+        return limite;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 }
